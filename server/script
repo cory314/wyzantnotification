@@ -1,0 +1,43 @@
+const getValue = function (currentValue) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.wyzant.com/tutor/jobs");
+    xhr.onload = async function () {
+      var doc = new DOMParser().parseFromString(xhr.response, "text/html");
+  
+      var a = doc.getElementsByClassName("text-bold");
+      if (currentValue >= Number(a[0].innerText)) {
+        console.log(
+          "There are still " +
+            a[0].innerText +
+            " tutoring jobs available on Wyzant.com"
+        );
+        await new Promise((r) => setTimeout(r, 10000));
+        getValue(Number(a[0].innerText));
+      } 
+      if (currentValue < Number(a[0].innerText)) {
+        var url = "http://localhost:3000";
+        var params = '"param1":"value1","param2":"value2"';
+        var http = new XMLHttpRequest();
+  
+        http.open("POST", url, true);
+  
+        http.setRequestHeader("Content-Type", "application/json");
+  
+        http.send(params);
+        console.log(
+          "There is a new job available " +
+            a[0].innerText +
+            " tutoring jobs available on Wyzant.com"
+        );
+  
+        var audio = new Audio(
+          "https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3"
+        );
+        audio.play();
+        getValue(Number(a[0].innerText));
+      }
+    };
+    xhr.send();
+  };
+  
+  getValue(279);
