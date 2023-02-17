@@ -3,7 +3,7 @@ const express = require('express');
 var cors = require('cors');
 const app = express();
 app.use(cors());
-const client = require('twilio')('AC490d577ec208df430f5470231afaa0a9', '965340f6c9d09f0e074cad63431b8cd5');
+const client = require('twilio')(auth, token);
 
 const xml = require('xml')
 app.post('/', (req, res) => {
